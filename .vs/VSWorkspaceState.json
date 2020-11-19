@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\problems"
+    "\\problems",
+    "\\problems\\easy"
   ],
-  "SelectedNode": "\\problems\\romanToInt.js",
+  "SelectedNode": "\\problems\\easy\\removeDuplicatesFromSortedArray.js",
   "PreviewInSolutionExplorer": false
 }
