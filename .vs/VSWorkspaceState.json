@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\problems",
-    "\\problems\\easy"
+    "\\problems\\easy",
+    "\\problems\\medium"
   ],
-  "SelectedNode": "\\problems\\easy\\countAndSay.js",
+  "SelectedNode": "\\problems\\medium\\longestSubstringWithoutRepeatingCharacters.js",
   "PreviewInSolutionExplorer": false
 }
