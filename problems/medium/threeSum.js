@@ -1,7 +1,26 @@
 "use strict";
 
+/**
+ * - Return empty array if length of nums is less than 3 (not enough elements for single triplet)
+ * - Sort nums in ascending order
+ * - While loop i from first index to three indices from end (nums.length - 3)
+ *   - Set j to last index
+ *   - If value to search is outside limits, break while loop (incrementing i no longer required)
+ *   - While loop j from last index to 2 indices from i
+ *     - Calculate value to search for = 0 - nums[i] - nums[j]
+ *     - If value to search is outside limits, break while loop (decrementing j no longer required for given i)
+ *     - Binary search for value
+ *       - If value exists, add triplet
+ *     - Decrement j
+ *   - Increment i
+ */
+
+/**
+ * [-4,-1,-1,0,1,2]
+ * @param {number[]} nums
+ * @return {number[][]}
+ */
 var threeSum = function (nums) {
-    debugger;
     // Return empty array if nums length is less than 3
     if (nums.length < 3)
         return [];
@@ -10,45 +29,37 @@ var threeSum = function (nums) {
     nums.sort((a, b) => a - b);
 
     let triplets = [];
-    let i = 0, j = nums.length - 1;
-    let mid, left, right, valToSearch;
+    let i = 0;
+    let j, mid, left, right;
 
-    /* If valToSearch is within limits of i and j
-     * 
-     * valToSearch >= nums[i] && valToSearch <= nums[j]
-     * when valToSearch = 0 - nums[i] - nums[j];
-     * 
-     * valToSearch           >= nums[i]
-     * 0 - nums[i] - nums[j] >= nums[i]
-     * 0 - nums[j]           >= 2*nums[i]
-     * AND
-     * valToSearch           <= nums[j]
-     * 0 - nums[i] - nums[j] <= nums[j]
-     * 0 - nums[i]           <= 2*nums[j]
-     */
-
-    // If valToSearch is NOT within limits of i and j, no further search is needed
     while (i < nums.length - 2) {
+        // Set j to last index of nums
+        j = nums.length - 1;
 
-        // If valToSearch is equal to either i or j value, check adjacent index.
-        // If value of adjacent index equals valToSearch, create triplet with this value
-        // without needing to use binary search.
+        // If value to search to outside limits, break while loop (incrementing i no longer required)
+        if (0 - nums[i] - nums[j] < nums[i] && 0 - nums[i] - nums[j] > nums[j])
+            break;
 
-        while (j - i > 1 && 0 - nums[j] >= 2 * nums[i] && 0 - nums[i] <= 2 * nums[j]) {
-            valToSearch = 0 - nums[i] - nums[j];
+        while (j > i + 1) {
+            // If value to search is outside limits, break while loop(decrementing j no longer required for given i)
+            if (0 - nums[i] - nums[j] < nums[i] && 0 - nums[i] - nums[j] > nums[j])
+                break;
 
-            // Binary search between i+1 and j-1 for value of valToSearch
-            left = i + 1;
-            right = j - 1;
-            while (right >= left) {
-                mid = left + Math.floor(0.5 * (right - left));
-                if (nums[mid] === valToSearch) {
-                    triplets.push([nums[i], nums[mid], nums[j]]);
-                    break;
-                } else if (nums[mid] > valToSearch) {
-                    right = mid - 1;
-                } else {
-                    left = mid + 1;
+            // If value to search is within limits
+            if (0 - nums[i] - nums[j] >= nums[i] && 0 - nums[i] - nums[j] <= nums[j]) {
+                left = i + 1;
+                right = j - 1;
+                while (right >= left) {
+                    mid = left + Math.floor(0.5 * (right - left));
+                    // If match found
+                    if (nums[mid] === 0 - nums[i] - nums[j]) {
+                        triplets.push([nums[i], nums[mid], nums[j]]);
+                        break;
+                    } else if (nums[mid] > 0 - nums[i] - nums[j]) { // Else if value is smaller than mid
+                        right = mid - 1;
+                    } else { // Else value is larger than mid
+                        left = mid + 1;
+                    }
                 }
             }
 
@@ -59,18 +70,15 @@ var threeSum = function (nums) {
             } while (j - i > 1 && nums[right] === nums[j]);
         }
 
-        // Reset j to last index of nums
-        j = nums.length - 1;
-
-        // Increment i until reaching a unique value
+        // Increment i until reaching a unique value, checking indices between last index
         left = i;
         do {
             i++;
-        } while (j - i > 1 && nums[left] === nums[i]);
+        } while (i < nums.length - 2 && nums[left] === nums[i]);
     }
 
     return triplets;
-}
+};
 
 /**
  * @todo [-1,0,1,2,-1,-4,-2,-3,3,0,4]
@@ -79,66 +87,54 @@ var threeSum = function (nums) {
  * @param {number[]} nums
  * @return {number[][]}
  */
-var threeSum = function (nums) {
-    // Sort nums [-4, -1, -1, 0, 1, 2]
-    /*
-    Comparing ends
-    -4 + 2 = -2 -> 0 - (-2) = 2 exists between limits -4,2
-    
-    if [-4,..., 1]
-    -4 + 1 = -3 -> 0 - (-3) = 3 does NOT exist between limits -4,1 so do NOT need to check
-    i++ -> i furthest from zero
-    
-    if [-1,..., 4]
-    -1 + 4 = 3 -> 0 - 3 = -3 does NOT exist between limits
-    j-- -> j furthest from zero
-    
-    */
-    debugger;
+var threeSum01 = function (nums) {
     // Return empty array if nums length is less than 3
     if (nums.length < 3)
         return [];
 
     // Sort nums in ascending order
-    nums.sort((a,b) => a - b);
+    nums.sort((a, b) => a - b);
 
     let triplets = [];
-    let i = 0, j = nums.length - 1;
-    let mid, left, right, valToSearch;
+    let i = 0;
+    let j, mid, left, right, valToSearch;
 
-    while (i + 1 < j) {
-        valToSearch = 0 - nums[i] - nums[j];
-        // If valToSearch is within limits
-        if (valToSearch >= nums[i] && valToSearch <= nums[j]) { 
-            left = i + 1;
-            right = j - 1;
-            while (right >= left) {
-                mid = left + Math.floor(0.5 * (right - left));
-                // If match found
-                if (nums[mid] === valToSearch) {
-                    triplets.push([nums[i], nums[mid], nums[j]]);
-                    break;
-                } else if (nums[mid] > valToSearch) { // Else if value is smaller than mid
-                    right = mid - 1;
-                } else { // Else value is larger than mid
-                    left = mid + 1;
+    while (i < nums.length - 2) {
+        // Set j to last index of nums
+        j = nums.length - 1;
+
+        while (j > i + 1) {
+            valToSearch = 0 - nums[i] - nums[j];
+            // If valToSearch is within limits
+            if (valToSearch >= nums[i] && valToSearch <= nums[j]) {
+                left = i + 1;
+                right = j - 1;
+                while (right >= left) {
+                    mid = left + Math.floor(0.5 * (right - left));
+                    // If match found
+                    if (nums[mid] === valToSearch) {
+                        triplets.push([nums[i], nums[mid], nums[j]]);
+                        break;
+                    } else if (nums[mid] > valToSearch) { // Else if value is smaller than mid
+                        right = mid - 1;
+                    } else { // Else value is larger than mid
+                        left = mid + 1;
+                    }
                 }
             }
-        }
 
-        // If lower limit is furthest from zero, increase i
-        if (Math.abs(nums[i]) > Math.abs(nums[j])) {
-            left = i;
-            do {
-                i++;
-            } while (nums[left] === nums[i]);
-
-        } else { // Else higher limit is furthest from zero, decrease j
+            // Decrement j until reaching a unique value, checking indices between i
             right = j;
             do {
                 j--;
-            } while (nums[right] === nums[j]);
+            } while (j - i > 1 && nums[right] === nums[j]);
         }
+
+        // Increment i until reaching a unique value, checking indices between last index
+        left = i;
+        do {
+            i++;
+        } while (i < nums.length - 2 && nums[left] === nums[i]);
     }
 
     return triplets;

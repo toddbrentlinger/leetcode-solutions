@@ -3,8 +3,9 @@
     "",
     "\\problems",
     "\\problems\\easy",
+    "\\problems\\hard",
     "\\problems\\medium"
   ],
-  "SelectedNode": "\\problems\\medium\\integerToRoman.js",
+  "SelectedNode": "\\problems\\medium\\threeSum.js",
   "PreviewInSolutionExplorer": false
 }
