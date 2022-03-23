@@ -92,6 +92,74 @@
  *       nums[i]+nums[j]+nums[mid] = -894 + 870 + -4 = -28
  *       New output is further from Target than current closest output
  *   Decrement j until reaching new value
+ *   
+ *  
+ *  nums: -8,-7,-5,-3,-2,4,6,8,10
+ *  Target: -8
+ *  Expected Output: -8 (-7,-5,4) i=1 j=5
+ *  
+ *  i=0 (-8) j=8 (10)
+ *  valNeeded = -8 - -8 - 10 = -10
+ *  valNeeded lower than range (val at i=0)
+ *      mid = i + 1 = 1 (-7) valNeeded is lower
+ *      currThreeSum = -8 + -7 + 10 = -5
+ *      threeSumClosest is undefined
+ *          threeSumClosest = -5
+ *      j--
+ *      
+ *  i=0 (-8) j=7 (8)
+ *  valNeeded = -8 - -8 - 8 = -8
+ *  valNeeded in range
+ *      left=1 right=6 mid=3
+ *      left=1 right=2 mid=1
+ *      left=1 right=0 exit mid=1 (-7) valNeeded is lower
+ *  valNeeded NOT found
+ *      use mid as third value
+ *      currThreeSum = -8 + -7 + 8 = -7
+ *      currThreeSum closer to target than threeSumClosest
+ *          threeSumClosest = -7
+ *  currThreeSum is greater than target
+ *      j--
+ *      
+ *  i=0 (-8) j=6 (6)
+ *  valNeeded = -8 - -8 - 6 = -6
+ *  valNeeded in range
+ *      left=1 right=5 mid=3
+ *      left=1 right=2 mid=1
+ *      left=2 right=2 mid=2
+ *      left=2 right=1 exit mid=2 (-5) valNeeded is lower
+ *  valNeeded NOT found
+ *      currThreeSum = -8 + -5 + 6 = -7
+ *      currThreeSum is equal to threeSumClosest
+ *  currThreeSum is greater than target
+ *      j--
+ *      
+ *  nums: -8,-7,-5,-3,-2,4,6,8,10
+ *  Target: -8
+ *  Expected Output: -8 (-7,-5,4) i=1 j=5
+ *      
+ *  i=0 (-8) j=5 (4)
+ *  valNeeded = -8 - -8 - 4 = -4
+ *  valNeeded in range
+ *      left=1 right=4 mid=2 
+ *      left=3 right=4 mid=3
+ *      left=3 right=2 exit mid=3 (-3) valNeeded is lower
+ *  valNeeded NOT found
+ *      currThreeSum = -8 + -3 + 4 = -7
+ *      currThreeSum is equal to threeSumClosest
+ *  currThreeSum is greater than target
+ *      j--
+ *  FAIL: j=5 is part of set that matches target. Should not decrement this value.
+ *  
+ *  i=0 (-8) j=4 (-2)
+ *  valNeeded = -8 - -8 - -2 = 2
+ *  valNeeded higher than range 
+ *      left=j+1=5 right=arr.length=8 mid=6
+ *      left=5 right=5 mid=5
+ *      left=5 right=4 exit mid=5 (4) valNeded is lower
+ *  valNeeded NOT found
+ *      currThreeSum = -8 + 4 + -2 = -6
+ *  
  */
 
 /**
@@ -100,7 +168,7 @@
  * @return {number}
  */
 var threeSumClosest = function (nums, target) {
-    //debugger;
+    debugger;
     // If nums length is 3, return sum of all values
     if (nums.length === 3) {
         return nums.reduce((prev, curr) => prev + curr);
@@ -197,6 +265,7 @@ var threeSumClosest = function (nums, target) {
  * @return {number}
  */
 var threeSumClosestBruteForce = function (nums, target) {
+    let selectedNums = [];
     // If nums length is 3, return sum of all values
     if (nums.length === 3) {
         return nums.reduce((prev, curr) => prev + curr);
