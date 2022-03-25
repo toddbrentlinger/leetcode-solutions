@@ -24,10 +24,14 @@ var removeElements = function (head, val) {
     let currNode = head;
     let prevNode = null;
     while (currNode !== null) {
+        // Check for empty linked list
+        if (head === null)
+            return head;
+
         // If current node holds the value
         if (currNode.val == val) {
             // If first node
-            if (prevNode == null) {
+            if (prevNode === null) {
                 // Assign new head
                 head = currNode.next;
                 // Leave prevNode as null
