@@ -1,11 +1,12 @@
 {
   "ExpandedNodes": [
     "",
+    "\\data-structures",
     "\\problems",
     "\\problems\\easy",
     "\\problems\\hard",
     "\\problems\\medium"
   ],
-  "SelectedNode": "\\problems\\medium\\threeSumClosest.js",
+  "SelectedNode": "\\problems\\easy\\palindromeLinkedList.js",
   "PreviewInSolutionExplorer": false
 }
