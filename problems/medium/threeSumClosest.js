@@ -162,12 +162,196 @@
  *  
  */
 
+/*
+     nums: -8,-7,-5,-3,-2,4,6,8,10
+     Target: -8
+     Expected Output: -8 (-7,-5,4) i=1 j=5
+     
+     -8 -7 -5 -3 -2 4 6 8 10 => -8
+      l                    h => req = -10 lower than l, use l+1 to get newSum = -5 > target, decrement h
+      l                 h    => req = -8 could be in middle
+      l  m              h    => newSum = -7 > target, decrement h
+      l               h      => req = -6 could be in middle
+      l  m            h      => newSum = -9 < target, increment l
+         l            h      => req = -7 could be in middle
+         l  m         h      => newSum = -6 > target, decrement h
+         l          h        => req = -5 could be in middle
+         l  m       h        => newSum = -8 == target, break loop and return closest -8
+    
+    -4 -1 1 2 target=1
+     l      h => req = 3 higher than h, use h-1 to get newSum = -1 < target, increment l
+        l   h => req = 0 could be in middle
+        l m h => newSum = 2 > target, decrement h
+        l h   => end loop, return closest = 2
+        
+    -4 -1 0 2 target=-1
+     l      h => req = 1 could be in middle
+     l  m   h => newSum = -3 < target, increment l
+        l   h => req = -2 lower than l, use l+1 to get newSum = 1 > target, decrement h
+        l h   => end loop, return closest = -3
+
+    1 1 1 1 target = 2 output = 3
+    l     h req = 0 lower than l, use l+1 to get newSum = 3 > target, decrement h
+
+    -1 -1 -1 -1 target = 2 output =-3
+
+    -8 -7 -5 -3 -2 4 6 8 10 target = -8 output = -8
+     l  m                h  req = -10 lower than l, use l+1 to get newSum = -5 > target, decrement h
+     l  m              h    req = -8 could be in middle, newSum = -7 > target, decrement h
+     l  m            h      req = -6 in middle, newSum = -9 < target, increment l
+        l  m         h      req = -7, newSum = -6 > target, decrement h
+        l  m       h        req = -5, newSum = -8 == -8, return target
+*/
+
+/*
+     nums: -8,-7,-5,-3,-2,4,6,8,10
+     Target: -8
+     Expected Output: -8 (-7,-5,4) i=1 j=5
+     
+     -8 -7 -5 -3 -2 4 6 8 10 => -8
+      i  l                 h => 3sum = -5 > target, decrement h
+      i  l              h    => 3sum = -7 > target, decrement h
+      i  l            h      => 3sum = -9 < target, increment l
+      i     l         h      => 3sum = -7 > target, decrement h
+      ...
+                      i l  h => 3sum = 24 > target, decrement h
+
+      l                    h => req = -10 lower than l, use l+1 to get newSum = -5 > target, decrement h
+      l                 h    => req = -8 could be in middle
+      l  m              h    => newSum = -7 > target, decrement h
+      l               h      => req = -6 could be in middle
+      l  m            h      => newSum = -9 < target, increment l
+         l            h      => req = -7 could be in middle
+         l  m         h      => newSum = -6 > target, decrement h
+         l          h        => req = -5 could be in middle
+         l  m       h        => newSum = -8 == target, break loop and return closest -8
+    
+    -4 -1 1 2 target=1
+     l      h => req = 3 higher than h, use h-1 to get newSum = -1 < target, increment l
+        l   h => req = 0 could be in middle
+        l m h => newSum = 2 > target, decrement h
+        l h   => end loop, return closest = 2
+        
+    -4 -1 0 2 target=-1
+     l      h => req = 1 could be in middle
+     l  m   h => newSum = -3 < target, increment l
+        l   h => req = -2 lower than l, use l+1 to get newSum = 1 > target, decrement h
+        l h   => end loop, return closest = -3
+
+    1 1 1 1 target = 2 output = 3
+    l     h req = 0 lower than l, use l+1 to get newSum = 3 > target, decrement h
+
+    -1 -1 -1 -1 target = 2 output =-3
+
+    -8 -7 -5 -3 -2 4 6 8 10 target = -8 output = -8
+     l  m                h  req = -10 lower than l, use l+1 to get newSum = -5 > target, decrement h
+     l  m              h    req = -8 could be in middle, newSum = -7 > target, decrement h
+     l  m            h      req = -6 in middle, newSum = -9 < target, increment l
+        l  m         h      req = -7, newSum = -6 > target, decrement h
+        l  m       h        req = -5, newSum = -8 == -8, return target
+
+*/
+
+var threeSumClosest = function (nums, target) {
+    // If nums length is 3, return sum of all values
+    if (nums.length === 3) {
+        return nums.reduce((prev, curr) => prev + curr);
+    }
+
+    // Sort nums in ascending order
+    nums.sort((a, b) => a - b);
+
+    let currThreeSumClosest, currThreeSum, low, high;
+    for (let i = 0; i < nums.length - 2; i++) {
+        low = i + 1;
+        high = nums.length - 1;
+        while(low < high) {
+            currThreeSum = nums[i] + nums[low] + nums[high];
+            // Check if new three sum is closer to target
+            if (currThreeSumClosest === undefined || Math.abs(target - currThreeSum) < Math.abs(target - currThreeSumClosest))
+                    currThreeSumClosest = currThreeSum;
+            // If currThreeSum is lower than target, increment low for next loop
+            if (currThreeSum < target) low++;
+            // Else if currThreeSum is higher than target, increment 
+            else if (currThreeSum > target) high--;
+            // Else currThreeSum is equal to target, return target
+            else return target;
+        }
+    }
+    return currThreeSumClosest;
+};
+
+var threeSumClosest02 = function (nums, target) {
+    debugger;
+    // If nums length is 3, return sum of all values
+    if (nums.length === 3) {
+        return nums.reduce((prev, curr) => prev + curr);
+    }
+
+    // Sort nums in ascending order
+    nums.sort((a, b) => a - b);
+
+    let currThreeSumClosest, currThreeSum, valNeeded, left, right, mid;
+    let low = 0;
+    let high = nums.length - 1;
+    while (low < high - 1) {
+        // Calculate value needed for third value to equal target
+        valNeeded = target - nums[low] - nums[high];
+
+        // If value needed is less than lower limit
+        if (valNeeded < nums[low]) {
+            // Use lower+1 index to find currThreeSum
+            currThreeSum = nums[low] + nums[low + 1] + nums[high];
+        }
+        // Else If value needed is more than higher limit
+        else if (valNeeded > nums[high]) {
+            // Use higher-1 index to find currThreeSum
+            currThreeSum = nums[low] + nums[high - 1] + nums[high];
+        }
+        // Else value needed is within range
+        else {
+            // Binary search values in between (low,high) Exclusive to low and high
+            left = low + 1;
+            right = high - 1;
+            while (left <= right) {
+                mid = left + Math.floor(0.5 * (right - left));
+                if (nums[mid] < valNeeded) {
+                    left = mid + 1;
+                } else if (nums[mid] > valNeeded) {
+                    right = mid - 1;
+                } else {
+                    // Found value needed to three sum to target, return target
+                    return target;
+                }
+            }
+
+            // Calc new three sum using mid
+            currThreeSum = nums[low] + nums[mid] + nums[high];
+        }
+
+        // Check if new three sum is closer to target
+        if (!currThreeSumClosest || Math.abs(target - currThreeSum) < Math.abs(target - currThreeSumClosest))
+                currThreeSumClosest = currThreeSum;
+
+        
+        // NOTE: currThreeSum should NOT equal target at this point, checked during binary search above
+        // If currThreeSum is less than target, increment lower limit
+        if (currThreeSum < target)
+            low++;
+        // Else currThreeSum is more than target, decrement higher limit
+        else
+            high--;
+    }
+
+    return currThreeSumClosest;
+};
+
 /**
  * @param {number[]} nums
  * @param {number} target
  * @return {number}
  */
-var threeSumClosest = function (nums, target) {
+var threeSumClosest01 = function (nums, target) {
     debugger;
     // If nums length is 3, return sum of all values
     if (nums.length === 3) {
@@ -265,7 +449,6 @@ var threeSumClosest = function (nums, target) {
  * @return {number}
  */
 var threeSumClosestBruteForce = function (nums, target) {
-    let selectedNums = [];
     // If nums length is 3, return sum of all values
     if (nums.length === 3) {
         return nums.reduce((prev, curr) => prev + curr);
