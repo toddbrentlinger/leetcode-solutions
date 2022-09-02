@@ -1,3 +1,5 @@
+'use strict';
+
 /*
 * [1,1] add 1, i=1 val=1 increment by one
 * [1,2] return
