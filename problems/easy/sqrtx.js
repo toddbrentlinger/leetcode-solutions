@@ -74,6 +74,50 @@ var mySqrtLongDivision = function (x) {
 
 };
 
+var mySqrtNewtonSingle = function (x, guess) {
+    if (guess === 0) {
+        return 0.5 * x;
+    }
+
+    return 0.5 * (guess + (x / guess));
+};
+
+var mySqrtNewton = function (x, guess) {
+    if (guess === undefined) {
+        guess = 0.5 * x;
+    }
+
+    const newGuess = mySqrtNewtonSingle(x, guess);
+
+    if (Number.isInteger(newGuess)) {
+        if (newGuess === guess) {
+            return newGuess;
+        } else {
+            return mySqrtNewton(x, newGuess);
+        }
+    } else {
+        return Math.floor(newGuess);
+    }
+};
+
+/**
+ * Binary Search Method
+ * 
+ * 0 (0)
+ * 1 (1)
+ * 2 (1)
+ * 3 (1)
+ * 4 (2)
+ * 5 (2) -> l:0 h:5 m:2 -> 2**2 = 4 < 5 -> l:2 h:5 m:3 -> 3**2 -> 9 > 5 -> l:2 h:3 
+ * 6 (2) ->
+ * 7 (2) -> 
+ * 8 (2) -> 
+ * 9 (3) ->
+ */
+var mySqrtBinarySearch = function (x) {
+
+};
+
 var mySqrtUnitTest = function (mySqrtFunc, input, expectedOutput) {
     const actualOutput = mySqrtFunc(input);
 
