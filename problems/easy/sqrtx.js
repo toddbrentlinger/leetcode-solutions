@@ -74,8 +74,9 @@ var mySqrtLongDivision = function (x) {
 
 };
 
+// Newton Method
 var mySqrtNewtonSingle = function (x, guess) {
-    if (guess === 0) {
+    if (!guess) {
         return 0.5 * x;
     }
 
@@ -83,20 +84,12 @@ var mySqrtNewtonSingle = function (x, guess) {
 };
 
 var mySqrtNewton = function (x, guess) {
-    if (guess === undefined) {
-        guess = 0.5 * x;
-    }
+    let newGuess = mySqrtNewtonSingle(x, guess);
 
-    const newGuess = mySqrtNewtonSingle(x, guess);
-
-    if (Number.isInteger(newGuess)) {
-        if (newGuess === guess) {
-            return newGuess;
-        } else {
-            return mySqrtNewton(x, newGuess);
-        }
-    } else {
+    if (Math.floor(newGuess) === Math.floor(guess)) {
         return Math.floor(newGuess);
+    } else {
+        return mySqrtNewton(x, newGuess);
     }
 };
 
@@ -119,10 +112,12 @@ var mySqrtBinarySearch = function (x) {
 };
 
 var mySqrtUnitTest = function (mySqrtFunc, input, expectedOutput) {
+    console.log(`Input: ${input}\nOutput(expected): ${expectedOutput}`);
+
     const actualOutput = mySqrtFunc(input);
 
     if (actualOutput !== expectedOutput) {
-        console.error(`Input: ${input}\nOutput(expected): ${expectedOuptut}\nOutput(actual): ${actualOutput}`);
+        console.error(`Input: ${input}\nOutput(expected): ${expectedOutput}\nOutput(actual): ${actualOutput}`);
         return false;
     }
 
