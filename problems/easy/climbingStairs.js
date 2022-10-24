@@ -23,6 +23,18 @@
 };
 
 /**
+ * @param {number} n
+ * @return {number}
+ */
+ var climbStairsRecursive = function(n) {
+    if (n < 2) {
+        return 1;
+    } else {
+        return climbStairsRecursive(n-1) + climbStairsRecursive(n-2);
+    }
+ };
+
+/**
  * Performs single unit test for climbStairs function.
  * @param {Number} input 
  * @param {Number} expectedOutput 
