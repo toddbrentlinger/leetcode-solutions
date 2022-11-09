@@ -6,7 +6,20 @@
  * @return {void} Do not return anything, modify nums1 in-place instead.
  */
  var merge = function(nums1, m, nums2, n) {
-    
+    let i = m - 1;
+    let j = n - 1;
+
+    while (j >= 0) {
+        if (i < 0 || nums1[i] < nums2[j]) {
+            nums1[i+j+1] = nums2[j];
+        } else { // Else nums1[i] >= nums2[j]
+            nums1[i+j+1] = nums1[i];
+            nums1[i+j] = nums2[j];
+            i--;
+        }
+
+        j--;
+    }
 };
 
 /**
@@ -61,6 +74,24 @@ var mergeUnitTestAll = function() {
             },
             expectedOutput: [1],
         },
+        {
+            input: {
+                nums1: [1,3,0,0],
+                m: 2,
+                nums2: [2,4],
+                n: 2
+            },
+            expectedOutput: [1,2,3,4],
+        },
+        {
+            input: {
+                nums1: [2,4,0,0],
+                m: 2,
+                nums2: [1,3],
+                n: 2
+            },
+            expectedOutput: [1,2,3,4],
+        },
     ];
 
     let bDoAllTestsPass = true;
@@ -94,3 +125,136 @@ var areArraysEqual = function(arr1, arr2) {
     // If reach here, arrays are equal
     return true;
 };
+
+/**
+nums1: [1,2,3,0,0,0],
+m: 3,
+nums2: [2,5,6],
+n: 3
+nums1(final): [1,2,2,3,5,6]
+
+i = m-1 = 2, j = n-1 = 2, nums1[i] = 3, nums2[j] = 6
+nums1[i] < nums2[j]
+nums1[i+j+1] = nums2[j] => nums1[5] = 6
+decrement j
+nums1 = [1,2,3,0,0,6]
+
+i = 2, j = 1, nums1[i] = 3, nums2[j] = 5
+nums1[i] < nums2[j]
+nums1[i+j+1] = nums2[j] => nums1[4] = 5
+decrement j
+nums1 = [1,2,3,0,5,6]
+
+i = 2, j = 0, nums1[i] = 3, nums2[j] = 2
+nums1[i] > nums2[j]
+nums1[i+j+1] = nums1[i] => nums1[3] = 3
+nums1[i+j] = nums2[j] => 
+decrement i & j
+nums1 = [1,2,2,3,5,6]
+
+i = 1, j = -1
+j < 0
+end loop
+nums1(final) = [1,2,2,3,5,6]
+
+*******************************************************************************
+
+nums1: [1],
+m: 1,
+nums2: [],
+n: 0
+nums1(final): [1]
+
+i = m-1 = 0, j = n-1 = -1
+j < 0
+end loop
+nums1(final): [1]
+
+*******************************************************************************
+
+nums1: [0],
+m: 0,
+nums2: [1],
+n: 1
+nums1(final): [1]
+
+i = m-1 = -1, j = n-1 = 0, nums1[i] = error, nums2[j] = 1
+i < 0
+nums1[i+j+1] = nums2[j]
+decrement j
+nums1 = [1]
+
+i = -1, j = -1
+j < 0
+end loop
+nums1(final) = [1]
+
+*******************************************************************************
+
+nums1: [1,3,0,0],
+m: 2,
+nums2: [2,4],
+n: 2
+nums1(final): [1,2,3,4]
+
+i = m-1 = 1, j = n-1 = 1, nums1[i] = 3, nums2[j] = 4
+nums1[i] < nums2[j]
+nums1[i+j+1] = nums2[j]
+decrement j
+nums1 = [1,3,0,4]
+
+i = 1, j = 0, nums1[i] = 3, nums2[j] = 2
+nums1[i] > nums2[j]
+nums1[i+j+1] = nums1[i] => nums1[2] = 3
+nums1[i+j] = nums2[j]   => nums1[1] = 2
+decrement i & j
+nums1 = [1,2,3,4]
+
+i = 0, j = -1
+j < 0
+end loop
+nums1(final): [1,2,3,4]
+
+*******************************************************************************
+
+nums1: [2,4,0,0],
+m: 2,
+nums2: [1,3],
+n: 2
+nums1(final): [1,2,3,4]
+
+i = m-1 = 1, j = n-1 = 1, nums1[i] = 4, nums2[j] = 3
+nums1[i] > nums2[j]
+nums1[i+j+1] = nums1[i] => nums1[3] = 4
+nums1[i+j] = nums2[j]   => nums1[2] = 3
+decrement i & j
+nums1 = [2,4,3,4]
+
+i = 0, j = 0, nums1[i] = 2, nums2[j] = 1
+nums1[i] > nums2[j]
+nums1[i+j+1] = nums1[i] => nums1[1] = 2
+nums1[i+j] = nums2[j]   => nums1[0] = 1
+decrement i & j
+nums1 = [1,2,3,4]
+
+i = -1, j = -1
+j < 0
+end loop
+nums1(final): [1,2,3,4]
+
+*******************************************************************************
+
+nums1: [1,2,0,0],
+m: 2,
+nums2: [3,4],
+n: 2
+nums1(final): [1,2,3,4]
+
+*******************************************************************************
+
+nums1: [3,4,0,0],
+m: 2,
+nums2: [1,2],
+n: 2
+nums1(final): [1,2,3,4]
+ */
