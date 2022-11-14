@@ -6,14 +6,24 @@
  * @return {void} Do not return anything, modify nums1 in-place instead.
  */
  var merge = function(nums1, m, nums2, n) {
+    // Decrement m and n to start at last index of each array
     m--;
     n--;
 
+    // Loop each value of second array that is to be added to first array
     while (n >= 0) {
+        // If looped through the entire first array OR first array value is less than second array value,
+        // assign SECOND array value in corresponding position of first array.
+        // Decrement SECOND array index counter.
         if (m < 0 || nums1[m] < nums2[n]) {
             nums1[m+n+1] = nums2[n];
             n--;
-        } else { // Else (m >=0 && nums1[m] >= nums2[n])
+        } 
+        // Else first array still has values left to check AND first array value is more than or equal to
+        // second array value, 
+        // assign FIRST array value in corresponding position AND second array value in position one index lower.
+        // Decrement FIRST array index counter.
+        else { // Else (m >=0 && nums1[m] >= nums2[n])
             nums1[m+n+1] = nums1[m];
             nums1[m+n] = nums2[n];
             m--;
