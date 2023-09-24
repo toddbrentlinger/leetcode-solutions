@@ -1,10 +1,36 @@
 /**
  * @param {string} columnTitle
  * @return {number}
+ * Runtime: 48ms (96.63%)
+ * Memory: 44.05MB (22.19%)
+ */
+var titleToNumber = function(columnTitle) {
+    return columnTitle.split('').reduce((accum, curr, index, arr) => accum + (curr.charCodeAt(0) - 64) * 26**(arr.length - index - 1), 0);
+};
+
+/**
+ * @param {string} columnTitle
+ * @return {number}
  * Runtime: 52ms (91.40%)
  * Memory: 43.93MB (27.93%)
  */
-var titleToNumber = function(columnTitle) {
+var titleToNumber2 = function(columnTitle) {
+    let output = 0;
+    
+    for (let i = 0; i < columnTitle.length; i++) {
+        output += (columnTitle.charCodeAt(i) - 64) * 26**(columnTitle.length - i - 1);
+    }
+
+    return output;
+};
+
+/**
+ * @param {string} columnTitle
+ * @return {number}
+ */
+var titleToNumber1 = function(columnTitle) {
+    return columnTitle.split('').reduce((accum, curr, index, arr) => accum + (curr.charCodeAt(0) - 64) * 26**(arr.length - index - 1), 0);
+
     let output = 0;
     let letterVal;
     
