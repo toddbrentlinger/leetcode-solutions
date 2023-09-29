@@ -29,8 +29,6 @@ var titleToNumber2 = function(columnTitle) {
  * @return {number}
  */
 var titleToNumber1 = function(columnTitle) {
-    return columnTitle.split('').reduce((accum, curr, index, arr) => accum + (curr.charCodeAt(0) - 64) * 26**(arr.length - index - 1), 0);
-
     let output = 0;
     let letterVal;
     
