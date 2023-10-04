@@ -10,35 +10,48 @@
  * @param {number} left
  * @param {number} right
  * @return {ListNode}
+ * Runtime: 37ms (99.30%)
+ * Memory: 42.14MB (46.03%)
  */
 var reverseBetween = function(head, left, right) {
     let beforeReversedListNode = left > 1 ? head : null;;
-    let afterReversedListNode = null;
+    let afterReversedListNode;
     let prevNode, currNode, nextNode;
     let i = 1;
-    debugger;
+    
+    // Find node before reversed section (null if beginning of list is reversed)
     while (i < left - 1) {
         beforeReversedListNode = beforeReversedListNode.next;
         i++;
     }
-    debugger;
-    afterReversedListNode = beforeReversedListNode;
+    
+    // Find node after reversed section (null if end of list is reversed)
+    afterReversedListNode = beforeReversedListNode || head;
     while (i < right + 1 && afterReversedListNode) {
         afterReversedListNode = afterReversedListNode.next;
         i++;
     }
 
-    prevNode = afterReversedListNode;
-    currNode = beforeReversedListNode.next;
-    debugger;
+    // Setup to reverse specified section of list
+    prevNode = afterReversedListNode; // Initialized to after node so first reversed node points to it
+    currNode = beforeReversedListNode ? beforeReversedListNode.next : head;
+    
+    // Reverse specified section of list
     while (currNode && currNode !== afterReversedListNode) {
         nextNode = currNode.next;
         currNode.next = prevNode;
         prevNode = currNode;
         currNode = nextNode;
     }
-    debugger;
-    beforeReversedListNode.next = prevNode;
+    
+    // Set before node to point to last node of pre-reversed section, now first node
+    if (beforeReversedListNode) {
+        beforeReversedListNode.next = prevNode;
+    } else {
+        head = prevNode;
+    }
+    
+    return head;
 };
 
 class ListNode {
@@ -60,6 +73,23 @@ var createLinkedListFromArr = function(arr) {
 
     return head;
 };
+
+var printLinkedList = function(head) {
+    if (!head) { return 'null'; }
+
+    let str = '';
+    let currNode = head;
+    while (currNode) {
+        str += currNode.val;
+        currNode = currNode.next;
+        if (currNode) { str += '->'; }
+    }
+    console.log(str);
+};
+
+reverseBetween(createLinkedListFromArr([1,2,3,4,5]), 2, 4);
+reverseBetween(createLinkedListFromArr([5]), 1, 1);
+reverseBetween(createLinkedListFromArr([3,5]), 1, 2);
 
 /*
 1,2,3,4,5 left=2 right=4
@@ -125,5 +155,9 @@ b p        a
 
 set b.next to prev
 1->4->3->2->5
+
+----------------------------------------------
+3,5 left=1 right=2
+5,3
 
  */
