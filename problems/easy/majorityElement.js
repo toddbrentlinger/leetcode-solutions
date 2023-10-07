@@ -1,3 +1,33 @@
+// ----------------------------------------------------------------------------
+// ---------------------- Boyer-Moore Voiting Algorithm -----------------------
+// ----------------------------------------------------------------------------
+
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var majorityElement = function(nums) {
+    let counter = 0;
+    let majority;
+
+    for (let i = 0; i < nums.length; i++) {
+        if (counter === 0) {
+            majority = nums[i];
+            counter = 1;
+        } else if (majority === nums[i]) {
+            counter++;
+        } else {
+            counter--;
+        }
+    }
+
+    return majority;
+};
+
+// ----------------------------------------------------------------------------
+// --------------------------------- Sorting ----------------------------------
+// ----------------------------------------------------------------------------
+
 /**
  * @param {number[]} nums
  * @return {number}
@@ -31,13 +61,17 @@ var majorityElement = function(nums) {
     return max;
 };
 
+// ----------------------------------------------------------------------------
+// --------------------------------- Hashing ----------------------------------
+// ----------------------------------------------------------------------------
+
 /**
  * @param {number[]} nums
  * @return {number}
  * Runtime: 56ms (72.78%)
  * Memory: 43.58MB (72.03%)
  */
-var majorityElement1 = function(nums) {
+var majorityElement = function(nums) {
     let map = new Map();
     let max, maxCount, iter, entry;
 
