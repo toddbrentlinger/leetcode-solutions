@@ -1,4 +1,49 @@
-'use strict';
+// ----------------------------------------------------------------------------
+// Dynamic Programming
+// ----------------------------------------------------------------------------
+
+/**
+ * @param {number} n
+ * @return {number}
+ * Runtime: 42ms (93.48%)
+ * Memory: 41.35MB (87.09%)
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
+var climbStairs = function(n) {
+    if (n === 1) { return 1; }
+    if (n === 2) { return 2; }
+
+    let firstPrev = 2;
+    let secondPrev = 1;
+    let result;
+
+    while (n > 2) {
+        result = firstPrev + secondPrev;
+        secondPrev = firstPrev;
+        firstPrev = result;
+        n--;
+    }
+
+    return result;
+};
+
+/**
+Fibonacci Sequence:
+n=1 - 1
+
+n=2 - 2
+
+n=3 - 3 = n(2) + n(1)
+1-2-3
+1-3
+2-3
+
+n=4 - 5 = n(3) + n(2)
+1-2-3-4
+1
+
+ */
 
 /**
  * @param {number} n
@@ -22,17 +67,26 @@
     return fib;
 };
 
+// ----------------------------------------------------------------------------
+// Recursion
+// ----------------------------------------------------------------------------
+
 /**
  * @param {number} n
  * @return {number}
  */
- var climbStairsRecursive = function(n) {
+var climbStairsRecursive = function (n) {
     if (n < 2) {
         return 1;
     } else {
-        return climbStairsRecursive(n-1) + climbStairsRecursive(n-2);
+        return climbStairsRecursive(n - 1) + climbStairsRecursive(n - 2);
     }
- };
+};
+
+// ----------------------------------------------------------------------------
+// Testing
+// ----------------------------------------------------------------------------
+
 
 /**
  * Performs single unit test for climbStairs function.
