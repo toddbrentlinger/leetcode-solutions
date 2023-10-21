@@ -9,11 +9,11 @@
 /**
  * @param {TreeNode} root
  * @return {number[]}
- * Runtime: ms (%)
- * Memory: MB (%)
+ * Runtime: 46ms (84.43%)
+ * Memory: 42.3MB (25.32%)
  */
 var postorderTraversal = function(root) {
     if (root === null) { return []; }
 
-    return [...postorderTraversal(root.left), ...postorderTraversal(root.right), root.val]
+    return [...postorderTraversal(root.left), ...postorderTraversal(root.right), root.val];
 };
