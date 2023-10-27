@@ -1,9 +1,11 @@
-﻿"use strict";
-
-/**
+﻿/**
  * Given a roman numeral, convert it to an integer.
  * @param {string} s
  * @return {number}
+ * Runtime: 92ms (95.6%)
+ * Memory: 48.8MB (18.77.%)
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
  */
 var romanToInt = function (s) {
     let sum = 0;

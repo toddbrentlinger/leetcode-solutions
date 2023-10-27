@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {
@@ -10,6 +8,10 @@
 /**
  * @param {ListNode} head
  * @return {ListNode}
+ * Runtime: 49ms (87.21%)
+ * Memory: 43.61MB (92.71%)
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
  */
 var reverseList = function (head) {
     if (head === null)

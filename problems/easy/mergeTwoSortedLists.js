@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {
@@ -14,6 +12,10 @@
  * @param {ListNode} l1
  * @param {ListNode} l2
  * @return {ListNode}
+ * Runtime: 56ms (70.68%)
+ * Memory: 44.1MB (56.57%)
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
  */
 var mergeTwoLists = function (l1, l2) {
     // Dummy first node to hang the result on
