@@ -2,6 +2,31 @@
  * @param {number[]} dist
  * @param {number[]} speed
  * @return {number}
+ * Runtime: 129ms (67.57%)
+ * Memory: 53.85MB (91.89%)
+ * Time Complexity: O(nlogn)
+ * Space Complexity: O(1)
+ */
+var eliminateMaximum = function(dist, speed) {
+    let i;
+    for (i = 0; i < dist.length; i++) {
+        dist[i] = Math.ceil(dist[i] / speed[i]);
+    }
+    dist.sort((a,b) => a - b);
+    
+    for (i = 0; i < dist.length; i++) {
+        if (dist[i] <= i) {
+            return i;
+        }
+    }
+
+    return dist.length;
+};
+
+/**
+ * @param {number[]} dist
+ * @param {number[]} speed
+ * @return {number}
  * Runtime: 139ms (48.65%)
  * Memory: 55.2MB (72.97%)
  * Time Complexity: O(nlogn)
