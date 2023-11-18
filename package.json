@@ -1,0 +1,28 @@
+{
+  "name": "leetcode-solutions",
+  "version": "1.0.0",
+  "description": "Solutions for leetcode problems.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toddbrentlinger/leetcode-solutions.git"
+  },
+  "keywords": [
+    "leetcode"
+  ],
+  "author": "Todd Brentlinger",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/toddbrentlinger/leetcode-solutions/issues"
+  },
+  "homepage": "https://github.com/toddbrentlinger/leetcode-solutions#readme",
+  "devDependencies": {
+    "@babel/core": "^7.23.3",
+    "@babel/preset-env": "^7.23.3",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0"
+  }
+}
