@@ -1,17 +1,30 @@
-"use strict";
-
-import { createLinkedListFromArray, convertLinkedListToArray } from '../../data-structures/linkedList.js';
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
 
 /**
  * @param {ListNode} head
  * @return {boolean}
+ * Runtime: 48ms (99.15%)
+ * Memory: 52.75MB (68.35%)
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
  */
 var hasCycle = function (head) {
+    // Base Case: If linked list is empty, cannot be cycle
     if (head === null)
         return false;
 
-    let slowNode = head;
-    let fastNode = head;
+    let slowNode = head; // Incremented by one every loop
+    let fastNode = head; // Incremented by two every loop
+
+    // If fastNode ever equals slowNode, linked list is a cycle.
+    // If fastNode reaches end of linked list, is NOT a cycle.
+
     while (fastNode !== null && fastNode.next !== null) {
         // Increment slowNode by one
         slowNode = slowNode.next;
@@ -22,9 +35,82 @@ var hasCycle = function (head) {
         if (slowNode === fastNode)
             return true;
     }
+    
     // If reach here, no cycle
     return false;
 };
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ * Runtime: 69ms (32.52%)
+ * Memory: 53.04MB (48.88%)
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
+var hasCycle04 = function(head) {
+    // Base Case: If head is empty or single node, linked list cannot be cycle
+    if (head === null || head.next === null) {
+        return false;
+    }
+
+    // If reach here, at linked list has at least 2 nodes
+    let slow = head;
+    let fast = head.next;
+
+    while (fast !== null) {
+        // If slow and fast point to same node, linked list must be a cycle
+        if (slow === fast) {
+            return true;
+        }
+
+        // Increment slow pointer by one
+        slow = slow.next;
+
+        // Increment fast pointer by two, check if possible first
+        fast = (fast.next !== null) ? fast.next.next : null;
+    }
+
+    // If reach here, no cycle found
+    return false;
+};
+
+/**
+Fast Pointer/Slow Pointer
+- Slow pointer is incremented by 1
+- Fast pointer is incremented by 2
+- If slow pointer and faster pointer ever point to the same node, list must be a cycle.
+
+_______________________________________________________________________________
+
+1->2->cycle
+s  f
+
+s +1
+f +2
+
+1->2->cycle
+  sf
+slow and fast point to same node, list is cycle
+
+_______________________________________________________________________________
+
+1->2->3->cycle
+s  f
+
+s +1
+f +2
+
+1->2->3->cycle
+f  s
+
+s +1
+f +2
+
+1->2->3->cycle
+     sf
+slow and fast point to same node, list is cycle
+ */
 
 /**
  * @param {ListNode} head
@@ -94,44 +180,4 @@ var hasCycle01 = function (head) {
     return false;
 };
 
-function hasCycleUnitTestSingle(head, expectedTruthy) {
-    if (hasCycle(head) !== expectedTruthy) {
-        console.log(`Test Failed!\nList: ${convertLinkedListToArray(head)}\nExpected Truthy: ${expectedTruthy}`);
-    }
-}
-
-function hasCycleUnitTests() {
-    let head, lastNode;
-
-    // [1, 2, 3, 4, 5] - No cycle
-    head = createLinkedListFromArray([1, 2, 3, 4, 5]);
-    hasCycleUnitTestSingle(head, false);
-    // Make cycle by making node with val=5 point next to node with val=3
-    // [1, 2, 3, 4, 5] - Cycle 5->3
-    lastNode = head;
-    while (lastNode.next !== null) {
-        lastNode = lastNode.next;
-    }
-    lastNode.next = head.next.next;
-    hasCycleUnitTestSingle(head, true);
-
-    // []
-    head = null;
-    hasCycleUnitTestSingle(head, false);
-
-    // [1] - No Cycle
-    head = createLinkedListFromArray([1]);
-    hasCycleUnitTestSingle(head, false);
-    // [1] - Cycle 1->1
-    head.next = head;
-    hasCycleUnitTestSingle(head, true);
-
-    // [1,2] - No Cycle
-    head = createLinkedListFromArray([1, 2]);
-    hasCycleUnitTestSingle(head, false);
-    // [1,2] - Cycle 2->1
-    head.next.next = head;
-    hasCycleUnitTestSingle(head, true);
-}
-
-hasCycleUnitTests();
+export { hasCycle }
