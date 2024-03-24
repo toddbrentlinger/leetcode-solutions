@@ -1,8 +1,3 @@
-"use strict";
-
-//import { createLinkedListFromArray, convertLinkedListToArray } from '/data-structures/linkedList.js';
-import * as LinkedList from '/data-structures/linkedList.js';
-
 /**
  * Definition for singly-linked list.
  * function ListNode(val, next) {
@@ -13,6 +8,10 @@ import * as LinkedList from '/data-structures/linkedList.js';
 /**
  * @param {ListNode} head
  * @return {boolean}
+ * Runtime: 110ms (89.66%)
+ * Memory: 69.37MB (89.01%)
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
  */
 var isPalindrome = function (head) {
     // Base case: Return true if single length list
@@ -98,30 +97,4 @@ var isPalindrome01 = function (head) {
     return true;
 };
 
-function isPalindromeUnitTestSingle(head, expectedOutput) {
-    console.assert(
-        isPalindrome(head) === expectedOutput,
-        {
-            llist: LinkedList.convertLinkedListToArray(head),
-            expectedOutput: expectedOutput,
-        }
-    );
-}
-
-function isPalindromeUnitTests() {
-    let llist;
-
-    llist = LinkedList.createLinkedListFromArray([1]);
-    isPalindromeUnitTestSingle(llist, true);
-
-    llist = LinkedList.createLinkedListFromArray([1, 2]);
-    isPalindromeUnitTestSingle(llist, false);
-
-    llist = LinkedList.createLinkedListFromArray([1, 2, 1]);
-    isPalindromeUnitTestSingle(llist, true);
-
-    llist = LinkedList.createLinkedListFromArray([1, 2, 2, 1]);
-    isPalindromeUnitTestSingle(llist, true);
-}
-
-isPalindromeUnitTests();
+export { isPalindrome, };
